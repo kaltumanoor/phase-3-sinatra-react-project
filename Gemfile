@@ -38,6 +38,7 @@ gem "require_all", "~> 3.0"
 
 # for passwords authenticate
 gem 'bcrypt', '~> 3.1', '>= 3.1.18'
+gem 'rerun', '~> 0.14.0'
 
 # These gems will only be used when we are running the application locally
 group :development do
