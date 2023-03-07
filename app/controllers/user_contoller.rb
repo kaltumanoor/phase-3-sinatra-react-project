@@ -2,11 +2,13 @@ class UserController < ApplicationController
 
     # sign up
     post '/signup' do
+        
     
         begin
             user = User.new(params)
             
-            if user.username.blank? || user.email.blank? ||user.password.blank? || User.find_by_email(params[:email]) || User.find_by_username(params[:username])
+            
+            if user.full_name.blank? || user.email.blank? ||user.password_hash.blank? || User.find_by_email(params[:email]) || User.find_by_full_name(params[:full_name])
                 #dont persist
             else
                 #persist
@@ -23,8 +25,10 @@ class UserController < ApplicationController
     # login
     post '/login' do
         begin           
-            user = User.find_by_username(params[:username])
-            if user && user.authenticate(params[:password])
+            user = User.find_by_full_name(params[:full_name])
+            
+            if user && ( user.password_hash==(params[:password_hash]))
+                
                 session[:user_id] = user.id
                 user.to_json
             end           
